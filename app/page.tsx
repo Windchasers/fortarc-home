@@ -1,101 +1,88 @@
-import Image from "next/image";
+'use client';
+
+import Image from 'next/image';
+import MainLayout from './components/layout/MainLayout';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <MainLayout>
+      {/* 全屏视差滚动区域 */}
+      <section className="relative h-screen">
+        <div className="absolute inset-0">
+          <Image
+            src="/hero-image.jpg"
+            alt="FORTARC 2024春季系列"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="relative z-10 flex items-center justify-center h-full bg-black bg-opacity-30 text-white">
+          <div className="text-center">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4">探索无界时尚</h1>
+            <p className="text-xl md:text-2xl mb-8">2024春季系列现已上市</p>
+            <button className="bg-white text-black px-8 py-3 text-lg font-semibold hover:bg-gray-100 transition-colors" onClick={() => window.location.href = '/products'}>
+              立即探索
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 新品预告区 */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">新品预告</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* 新品卡片示例 */}
+            {[1, 2, 3].map((item) => (
+              <div key={item} className="group relative overflow-hidden">
+                <div className="aspect-w-3 aspect-h-4">
+                  <Image
+                    src={`/product-${item}.jpg`}
+                    alt={`新品 ${item}`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div className="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="text-white">
+                    <h3 className="text-xl font-semibold mb-2">限量系列 {item}</h3>
+                    <p className="mb-4">即将发售</p>
+                    <button className="bg-white text-black px-6 py-2 text-sm font-semibold hover:bg-gray-100 transition-colors">
+                      加入提醒
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 品牌理念区 */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">匠心原创，永续时尚</h2>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                FORTARC致力于将传统工艺与现代设计完美融合，每一件作品都凝聚着我们对时尚的理解与追求。我们坚持环保可持续的生产理念，为您带来既时尚又对环境负责的服装系列。
+              </p>
+              <button className="border-2 border-black px-8 py-3 text-lg font-semibold hover:bg-black hover:text-white transition-colors">
+                了解更多
+              </button>
+            </div>
+            <div className="relative h-[600px]">
+              <Image
+                src="/brand-story.jpg"
+                alt="FORTARC品牌故事"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </MainLayout>
   );
 }
