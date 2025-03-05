@@ -30,7 +30,7 @@ const BrandPage: FC = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">设计哲学</h2>
               <p className="text-gray-600 leading-relaxed mb-8">
-                FORTARC秉承"Less is More"的设计理念，将现代美学与传统工艺完美融合。
+                FORTARC秉承&quot;Less is More&quot;的设计理念，将现代美学与传统工艺完美融合。
                 我们相信，真正的奢华不在于表面的装饰，而在于对细节的极致追求。
               </p>
               <div className="grid grid-cols-2 gap-6">
