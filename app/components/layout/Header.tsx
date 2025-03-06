@@ -11,6 +11,7 @@ const Header: FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
 
   // 模拟购物车数据
   const [cartItems, setCartItems] = useState([
@@ -78,6 +79,19 @@ const Header: FC = () => {
 
   // 计算总金额
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleSignOut = () => {
+    setIsLogoutConfirmOpen(true);
+    setIsProfileOpen(false);
+  };
+
+  const confirmSignOut = () => {
+    signOut({ redirect: false }).then(() => {
+      router.push('/');
+      router.refresh();
+    });
+    setIsLogoutConfirmOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
@@ -164,10 +178,7 @@ const Header: FC = () => {
                       我的订单
                     </Link>
                     <button
-                      onClick={() => {
-                        signOut();
-                        setIsProfileOpen(false);
-                      }}
+                      onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       退出登录
@@ -341,6 +352,31 @@ const Header: FC = () => {
                   </button>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+      {/* 登出确认弹窗 */}
+      {isLogoutConfirmOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-[20vh]">
+          <div className="bg-white w-full max-w-sm mx-4 rounded-lg shadow-xl">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-4">确认退出登录</h3>
+              <p className="text-gray-600 mb-6">您确定要退出登录吗？</p>
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setIsLogoutConfirmOpen(false)}
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  取消
+                </button>
+                <button
+                  onClick={confirmSignOut}
+                  className="px-4 py-2 text-sm text-white bg-black hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  确认退出
+                </button>
+              </div>
             </div>
           </div>
         </div>
