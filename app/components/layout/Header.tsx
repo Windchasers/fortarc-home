@@ -1,7 +1,84 @@
+'use client';
+
 import Link from 'next/link';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import Image from 'next/image';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header: FC = () => {
+  const { data: session, status } = useSession();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  // 模拟购物车数据
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      name: '经典羊毛大衣',
+      price: 2999,
+      image: '/products/coat-1.jpg',
+      quantity: 1
+    },
+    {
+      id: 2,
+      name: '休闲亚麻衬衫',
+      price: 699,
+      image: '/products/shirt-1.jpg',
+      quantity: 2
+    }
+  ]);
+
+  // 模拟搜索结果数据
+  const searchResults = [
+    {
+      id: 1,
+      name: '经典羊毛大衣',
+      price: 2999,
+      image: '/products/coat-1.jpg'
+    },
+    {
+      id: 2,
+      name: '休闲亚麻衬衫',
+      price: 699,
+      image: '/products/shirt-1.jpg'
+    },
+    {
+      id: 3,
+      name: '高腰直筒牛仔裤',
+      price: 899,
+      image: '/products/jeans-1.jpg'
+    }
+  ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // 这里可以添加实际的搜索逻辑
+    console.log('搜索关键词:', searchQuery);
+  };
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    setSearchQuery('');
+  };
+
+  // 更新商品数量
+  const updateQuantity = (id: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setCartItems(cartItems.map(item =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+
+  // 删除商品
+  const removeItem = (id: number) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
+  // 计算总金额
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -15,23 +92,259 @@ const Header: FC = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="hover:text-gray-600 transition-colors">
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="hover:text-gray-600 transition-colors"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </button>
-          <Link href="/cart" className="hover:text-gray-600 transition-colors">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="hover:text-gray-600 transition-colors relative"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-          </Link>
-          <Link href="/account" className="hover:text-gray-600 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          </Link>
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            )}
+          </button>
+          <div className="relative">
+            <button
+              onClick={() => setIsProfileOpen(!isProfileOpen)}
+              className="hover:text-gray-600 transition-colors focus:outline-none"
+            >
+              {session?.user ? (
+                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                  {session.user.image ? (
+                    <Image
+                      src={session.user.image}
+                      alt={session.user.name || ''}
+                      width={32}
+                      height={32}
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm font-medium">
+                      {session.user.name?.[0] || session.user.email?.[0]}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              )}
+            </button>
+
+            {isProfileOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                {session?.user ? (
+                  <>
+                    <div className="px-4 py-2 border-b">
+                      <p className="font-medium">{session.user.name || '用户'}</p>
+                      <p className="text-sm text-gray-600">{session.user.email}</p>
+                    </div>
+                    <Link
+                      href="/account"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      个人中心
+                    </Link>
+                    <Link
+                      href="/account/orders"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      我的订单
+                    </Link>
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setIsProfileOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      退出登录
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        signIn();
+                        setIsProfileOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      登录
+                    </button>
+                    <Link
+                      href="/auth/signup"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setIsProfileOpen(false)}
+                    >
+                      注册
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </nav>
+
+      {/* 搜索弹窗 */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20">
+          <div className="bg-white w-full max-w-4xl mx-4 rounded-lg shadow-xl">
+            <div className="p-4 border-b">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">搜索商品</h2>
+                <button
+                  onClick={closeSearch}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <form onSubmit={handleSearch} className="flex gap-2">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="输入关键词搜索"
+                  className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  搜索
+                </button>
+              </form>
+            </div>
+
+            <div className="p-4 max-h-[60vh] overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {searchResults.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={`/products/${product.id}`}
+                    onClick={closeSearch}
+                    className="group block"
+                  >
+                    <div className="aspect-square relative mb-2 overflow-hidden rounded-lg bg-gray-100">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <h3 className="font-semibold mb-1">{product.name}</h3>
+                    <p className="text-gray-600">¥{product.price}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 购物车下拉面板 */}
+      {isCartOpen && (
+        <div className="fixed inset-x-0 top-0 z-50">
+          <div className="fixed inset-0 bg-black/60" onClick={() => setIsCartOpen(false)} />
+          <div className="relative bg-white border-t shadow-xl transform transition-transform duration-300 ease-out">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold">购物车</h2>
+                <button
+                  onClick={() => setIsCartOpen(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="max-h-[60vh] overflow-y-auto">
+                {cartItems.length === 0 ? (
+                  <div className="text-center py-8">
+                    <p className="text-gray-500">购物车是空的</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {cartItems.map((item) => (
+                      <div key={item.id} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
+                        <div className="relative w-24 h-24 flex-shrink-0">
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold">{item.name}</h3>
+                          <p className="text-gray-600 mb-2">¥{item.price}</p>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="w-8 h-8 flex items-center justify-center border rounded-lg bg-white"
+                            >
+                              -
+                            </button>
+                            <span className="w-8 text-center">{item.quantity}</span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-8 h-8 flex items-center justify-center border rounded-lg bg-white"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="text-gray-400 hover:text-gray-600"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {cartItems.length > 0 && (
+                <div className="mt-6 pt-6 border-t">
+                  <div className="flex justify-between mb-4">
+                    <span className="font-semibold">总计</span>
+                    <span className="font-semibold">¥{total}</span>
+                  </div>
+                  <button
+                    onClick={() => console.log('结算', cartItems)}
+                    className="w-full py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  >
+                    结算
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

@@ -1,101 +1,81 @@
-import { FC } from 'react';
+'use client';
+
+import { FC, useEffect, useState } from 'react';
+import { Product } from '@/lib/models/product';
 import MainLayout from '../components/layout/MainLayout';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const ProductsPage: FC = () => {
+export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [category, setCategory] = useState('');
+  const [sortBy, setSortBy] = useState('createdAt');
+  const [sortOrder, setSortOrder] = useState('desc');
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const params = new URLSearchParams();
+      if (category) params.append('category', category);
+      params.append('sortBy', sortBy);
+      params.append('sortOrder', sortOrder);
+
+      const response = await fetch(`/api/products?${params.toString()}`);
+      const data = await response.json();
+      setProducts(data.products);
+    };
+
+    fetchProducts();
+  }, [category, sortBy, sortOrder]);
+
   return (
     <MainLayout>
-      {/* 智能推荐区域 */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">为您推荐</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                <div className="relative aspect-w-3 aspect-h-4">
-                  <Image
-                    src={`/product-${item}.jpg`}
-                    alt={`推荐商品 ${item}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold mb-2">精选商品 {item}</h3>
-                  <p className="text-gray-600 text-sm mb-2">基于您的浏览历史推荐</p>
-                  <button className="w-full bg-black text-white py-2 hover:bg-gray-800 transition-colors">
-                    查看详情
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="container mx-auto px-4 py-24">
+        <h1 className="text-4xl font-bold text-center mb-12">产品系列</h1>
 
-      {/* 360度展示区域 */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">360°全方位展示</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="relative aspect-square bg-gray-100 rounded-lg">
-              {/* 这里将集成360度展示组件 */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-gray-500">360° 展示区域</span>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">细节纵览</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                通过360度全方位展示，让您能够从任意角度欣赏每件商品的精致细节。
-                无论是面料质地、剪裁工艺，还是配饰搭配，都能得到最直观的体验。
-              </p>
-              <div className="grid grid-cols-3 gap-4">
-                {[1, 2, 3].map((item) => (
-                  <button
-                    key={item}
-                    className="aspect-square bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-                  >
-                    视角 {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="flex flex-wrap gap-4 mb-8">
+          <select
+            className="px-4 py-2 border rounded-lg"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">全部分类</option>
+            <option value="外套">外套</option>
+            <option value="衬衫">衬衫</option>
+            <option value="裤装">裤装</option>
+          </select>
+          <select
+            className="px-4 py-2 border rounded-lg"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="">价格排序</option>
+            <option value="asc">从低到高</option>
+            <option value="desc">从高到低</option>
+          </select>
         </div>
-      </section>
 
-      {/* 搭配建议区域 */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8">AI搭配建议</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="bg-white rounded-lg overflow-hidden shadow-md">
-                <div className="relative aspect-w-4 aspect-h-5">
-                  <Image
-                    src={`/outfit-${item}.jpg`}
-                    alt={`搭配方案 ${item}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="font-semibold text-xl mb-3">搭配方案 {item}</h3>
-                  <p className="text-gray-600 mb-4">
-                    基于AI分析，为您推荐完美契合的穿搭组合，打造专属个人风格。
-                  </p>
-                  <button className="w-full border-2 border-black py-2 hover:bg-black hover:text-white transition-colors">
-                    查看搭配详情
-                  </button>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <Link
+              href={`/products/${product._id}`}
+              key={product._id.toString()}
+              className="group"
+            >
+              <div className="bg-gray-50 aspect-square relative mb-4 overflow-hidden">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
-            ))}
-          </div>
+              <h3 className="font-semibold mb-2">{product.name}</h3>
+              <p className="text-gray-600">¥{product.price}</p>
+              <p className="text-sm text-gray-500">{product.category}</p>
+            </Link>
+          ))}
         </div>
-      </section>
+      </div>
     </MainLayout>
   );
-};
-
-export default ProductsPage;
+}

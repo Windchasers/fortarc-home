@@ -1,0 +1,51 @@
+{
+  "users": [
+    {
+      "_id": "507f1f77bcf86cd799439011",
+      "name": "张三",
+      "email": "zhangsan@example.com",
+      "hashedPassword": "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewfJPAJl.esgmXyS",
+      "image": "https://example.com/avatars/zhangsan.jpg",
+      "emailVerified": "2024-01-15T08:30:00.000Z",
+      "createdAt": "2024-01-15T08:00:00.000Z",
+      "updatedAt": "2024-01-15T08:30:00.000Z"
+    }
+  ],
+  "accounts": [
+    {
+      "_id": "507f1f77bcf86cd799439012",
+      "userId": "507f1f77bcf86cd799439011",
+      "type": "oauth",
+      "provider": "google",
+      "providerAccountId": "123456789",
+      "refresh_token": "refreshtoken123",
+      "access_token": "accesstoken123",
+      "expires_at": 1674284461,
+      "token_type": "Bearer",
+      "scope": "openid profile email",
+      "id_token": "idtoken123",
+      "createdAt": "2024-01-15T08:15:00.000Z",
+      "updatedAt": "2024-01-15T08:15:00.000Z"
+    }
+  ],
+  "sessions": [
+    {
+      "_id": "507f1f77bcf86cd799439013",
+      "sessionToken": "8a7b6c5d4e3f2g1h",
+      "userId": "507f1f77bcf86cd799439011",
+      "expires": "2024-02-15T08:00:00.000Z",
+      "createdAt": "2024-01-15T08:20:00.000Z",
+      "updatedAt": "2024-01-15T08:20:00.000Z"
+    }
+  ],
+  "verificationTokens": [
+    {
+      "_id": "507f1f77bcf86cd799439014",
+      "token": "verificationtoken123",
+      "identifier": "zhangsan@example.com",
+      "expires": "2024-01-16T08:00:00.000Z",
+      "createdAt": "2024-01-15T08:25:00.000Z",
+      "updatedAt": "2024-01-15T08:25:00.000Z"
+    }
+  ]
+}
