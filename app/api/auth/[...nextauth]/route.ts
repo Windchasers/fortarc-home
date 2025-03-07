@@ -46,7 +46,21 @@ export const authOptions: AuthOptions = {
     })
   ],
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30天
+    updateAge: 24 * 60 * 60 // 每24小时更新一次
+  },
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60 // 与 session maxAge 保持一致
+      }
+    }
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {

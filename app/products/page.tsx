@@ -11,17 +11,31 @@ export default function ProductsPage() {
   const [category, setCategory] = useState('');
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const params = new URLSearchParams();
-      if (category) params.append('category', category);
-      params.append('sortBy', sortBy);
-      params.append('sortOrder', sortOrder);
+      try {
+        setIsLoading(true);
+        setError('');
+        const params = new URLSearchParams();
+        if (category) params.append('category', category);
+        params.append('sortBy', sortBy);
+        params.append('sortOrder', sortOrder);
 
-      const response = await fetch(`/api/products?${params.toString()}`);
-      const data = await response.json();
-      setProducts(data.products);
+        const response = await fetch(`/api/products?${params.toString()}`);
+        if (!response.ok) {
+          throw new Error('获取商品列表失败');
+        }
+        const data = await response.json();
+        setProducts(data.products || []);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : '获取商品列表失败');
+        setProducts([]);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchProducts();
@@ -54,27 +68,37 @@ export default function ProductsPage() {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <Link
-              href={`/products/${product._id}`}
-              key={product._id.toString()}
-              className="group"
-            >
-              <div className="bg-gray-50 aspect-square relative mb-4 overflow-hidden">
-                <Image
-                  src={product.images[0]}
-                  alt={product.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <h3 className="font-semibold mb-2">{product.name}</h3>
-              <p className="text-gray-600">¥{product.price}</p>
-              <p className="text-sm text-gray-500">{product.category}</p>
-            </Link>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-12 text-red-500">{error}</div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-12 text-gray-500">暂无商品</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {products.map((product) => (
+              <Link
+                href={`/products/${product._id}`}
+                key={product._id.toString()}
+                className="group"
+              >
+                <div className="bg-gray-50 aspect-square relative mb-4 overflow-hidden">
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <h3 className="font-semibold mb-2">{product.name}</h3>
+                <p className="text-gray-600">¥{product.price}</p>
+                <p className="text-sm text-gray-500">{product.category}</p>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </MainLayout>
   );

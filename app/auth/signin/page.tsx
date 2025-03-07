@@ -26,6 +26,12 @@ const SignInPage: FC = () => {
         email,
         password,
         redirect: false
+      }).catch(err => {
+        // 处理SSL/TLS等网络层错误
+        if (err.message?.includes('SSL') || err.message?.includes('TLS')) {
+          throw new Error('网络连接不安全，请稍后重试');
+        }
+        throw err;
       });
 
       if (!result) {
@@ -33,13 +39,27 @@ const SignInPage: FC = () => {
       }
 
       if (result.error) {
-        setError(result.error);
-      } else {
-        router.push('/');
-        router.refresh();
+        // 处理业务层面的错误
+        switch (result.error) {
+          case 'CredentialsSignin':
+            setError('邮箱或密码错误，请重新输入');
+            break;
+          case 'AccessDenied':
+            setError('账户已被禁用，请联系管理员');
+            break;
+          default:
+            setError(result.error);
+        }
+        return;
       }
+
+      router.push('/');
+      router.refresh();
     } catch (error) {
-      setError(error instanceof Error ? error.message : '登录过程中发生错误，请稍后重试');
+      // 统一处理系统错误
+      const errorMessage = error instanceof Error ? error.message : '登录过程中发生错误，请稍后重试';
+      setError(errorMessage);
+      console.error('登录错误:', error);
     } finally {
       setIsLoading(false);
     }

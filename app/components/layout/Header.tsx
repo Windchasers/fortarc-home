@@ -1,57 +1,114 @@
 'use client';
 
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
+
+interface CartItem {
+  productId: string;
+  quantity: number;
+  specs: {
+    [key: string]: string;
+  };
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+    images: string[];
+  };
+}
 
 const Header: FC = () => {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // 模拟购物车数据
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: '经典羊毛大衣',
-      price: 2999,
-      image: '/products/coat-1.jpg',
-      quantity: 1
-    },
-    {
-      id: 2,
-      name: '休闲亚麻衬衫',
-      price: 699,
-      image: '/products/shirt-1.jpg',
-      quantity: 2
+  // 获取购物车数据
+  const fetchCartItems = async () => {
+    if (!session?.user) return;
+    
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/cart');
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || '获取购物车失败');
+      }
+      
+      setCartItems(data.items);
+    } catch (error) {
+      console.error('获取购物车失败:', error);
+      setCartItems([]);
+      toast.error(error instanceof Error ? error.message : '获取购物车数据失败，请稍后重试');
+    } finally {
+      setIsLoading(false);
     }
-  ]);
+  };
 
-  // 模拟搜索结果数据
-  const searchResults = [
-    {
-      id: 1,
-      name: '经典羊毛大衣',
-      price: 2999,
-      image: '/products/coat-1.jpg'
-    },
-    {
-      id: 2,
-      name: '休闲亚麻衬衫',
-      price: 699,
-      image: '/products/shirt-1.jpg'
-    },
-    {
-      id: 3,
-      name: '高腰直筒牛仔裤',
-      price: 899,
-      image: '/products/jeans-1.jpg'
+  // 监听登录状态变化，获取购物车数据
+  useEffect(() => {
+    fetchCartItems();
+  }, [session]);
+
+  // 更新商品数量
+  const updateQuantity = async (productId: string, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    try {
+      const response = await fetch('/api/cart', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productId,
+          quantity: newQuantity
+        })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '更新购物车失败');
+      fetchCartItems();
+      toast.success('更新购物车成功');
+    } catch (error) {
+      console.error('更新购物车失败:', error);
+      toast.error(error instanceof Error ? error.message : '更新购物车失败，请稍后重试');
     }
-  ];
+  };
+
+  // 删除商品
+  const removeItem = async (productId: string) => {
+    try {
+      const response = await fetch('/api/cart', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ productId })
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '删除商品失败');
+      fetchCartItems();
+      toast.success('删除商品成功');
+    } catch (error) {
+      console.error('删除商品失败:', error);
+      toast.error(error instanceof Error ? error.message : '删除商品失败，请稍后重试');
+    }
+  };
+
+  // 计算总金额
+  const total = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,22 +120,6 @@ const Header: FC = () => {
     setIsSearchOpen(false);
     setSearchQuery('');
   };
-
-  // 更新商品数量
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    ));
-  };
-
-  // 删除商品
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  // 计算总金额
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleSignOut = () => {
     setIsLogoutConfirmOpen(true);

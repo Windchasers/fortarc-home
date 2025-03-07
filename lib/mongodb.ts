@@ -5,7 +5,20 @@ if (!process.env.MONGODB_URI) {
 }
 
 const uri = process.env.MONGODB_URI;
-const options = {};
+const options = {
+  // ssl: true,
+  // tls: true,
+  tlsAllowInvalidCertificates: true,
+  tlsAllowInvalidHostnames: true,
+  dbName: 'fortarc',
+  connectTimeoutMS: 5000,
+  socketTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 5000,
+  retryWrites: true,
+  retryReads: true,
+  maxPoolSize: 10,
+  minPoolSize: 1
+};
 
 let client;
 let clientPromise: Promise<MongoClient>;
