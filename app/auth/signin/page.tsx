@@ -22,17 +22,25 @@ const SignInPage: FC = () => {
         throw new Error('网络连接已断开，请检查网络连接后重试');
       }
 
+      console.log('登录参数:', { email, password });
+      debugger; // 断点1：发起登录请求前
+
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false
       }).catch(err => {
+        console.log('登录请求错误:', err);
+        debugger; // 断点2：捕获到网络错误
         // 处理SSL/TLS等网络层错误
         if (err.message?.includes('SSL') || err.message?.includes('TLS')) {
           throw new Error('网络连接不安全，请稍后重试');
         }
         throw err;
       });
+
+      console.log('登录响应:', result);
+      debugger; // 断点3：获取登录响应后
 
       if (!result) {
         throw new Error('登录请求失败，请稍后重试');

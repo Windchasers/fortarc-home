@@ -4,6 +4,16 @@ import { Product, ProductFilters } from '@/lib/models/product';
 
 export async function GET(request: Request) {
   try {
+    // 检查数据库连接状态
+    const client = await clientPromise;
+    if (!client) {
+      console.error('数据库客户端未初始化');
+      return NextResponse.json(
+        { error: '服务器连接错误' },
+        { status: 500 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const filters: ProductFilters = {
       category: searchParams.get('category') || undefined,
@@ -15,9 +25,23 @@ export async function GET(request: Request) {
       pageSize: searchParams.get('pageSize') ? Number(searchParams.get('pageSize')) : 12
     };
 
-    const client = await clientPromise;
     const db = client.db('fortarc');
+    if (!db) {
+      console.error('无法访问数据库');
+      return NextResponse.json(
+        { error: '数据库访问错误' },
+        { status: 500 }
+      );
+    }
+
     const collection = db.collection('products');
+    if (!collection) {
+      console.error('无法访问products集合');
+      return NextResponse.json(
+        { error: '数据库集合访问错误' },
+        { status: 500 }
+      );
+    }
 
     // 构建查询条件
     const query: any = {};
@@ -51,8 +75,16 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error('获取产品列表失败:', error);
+    let errorMessage = '获取产品列表失败';
+    if (error instanceof Error) {
+      if (error.name === 'MongoServerError') {
+        errorMessage = '数据库连接失败，请稍后重试';
+      } else if (error.name === 'MongoNetworkError') {
+        errorMessage = '网络连接失败，请检查网络设置';
+      }
+    }
     return NextResponse.json(
-      { error: '获取产品列表失败' },
+      { error: errorMessage },
       { status: 500 }
     );
   }

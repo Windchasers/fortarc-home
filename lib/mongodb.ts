@@ -5,20 +5,17 @@ if (!process.env.MONGODB_URI) {
 }
 
 const uri = process.env.MONGODB_URI;
+// 简化连接选项，移除可能导致问题的TLS配置
 const options = {
-  // ssl: true,
-  // tls: true,
-  tlsAllowInvalidCertificates: true,
-  tlsAllowInvalidHostnames: true,
-  dbName: 'fortarc',
-  connectTimeoutMS: 5000,
-  socketTimeoutMS: 30000,
-  serverSelectionTimeoutMS: 5000,
+  connectTimeoutMS: 30000, // 增加连接超时时间
+  socketTimeoutMS: 45000,
+  serverSelectionTimeoutMS: 30000, // 增加服务器选择超时时间
   retryWrites: true,
-  retryReads: true,
-  maxPoolSize: 10,
-  minPoolSize: 1
+  retryReads: true
 };
+
+console.log('MongoDB连接配置初始化，URI格式检查:', 
+  uri.startsWith('mongodb+srv://') ? 'URI格式正确' : 'URI格式可能有问题');
 
 let client;
 let clientPromise: Promise<MongoClient>;

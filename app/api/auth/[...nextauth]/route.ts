@@ -15,33 +15,54 @@ export const authOptions: AuthOptions = {
         password: { label: "密码", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("请输入邮箱和密码");
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("请输入邮箱和密码");
+          }
+
+          const client = await clientPromise;
+          if (!client) {
+            console.error('认证服务：数据库客户端未初始化');
+            throw new Error("服务器连接错误");
+          }
+
+          const db = client.db("fortarc");
+          if (!db) {
+            console.error('认证服务：无法访问数据库');
+            throw new Error("数据库访问错误");
+          }
+
+          const collection = db.collection("users");
+          if (!collection) {
+            console.error('认证服务：无法访问users集合');
+            throw new Error("数据库集合访问错误");
+          }
+
+          const user = await collection.findOne({ email: credentials.email });
+
+          if (!user || !user.hashedPassword) {
+            throw new Error("用户不存在");
+          }
+
+          const isCorrectPassword = await bcrypt.compare(
+            credentials.password,
+            user.hashedPassword
+          );
+
+          if (!isCorrectPassword) {
+            throw new Error("密码错误");
+          }
+
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name,
+            image: user.image
+          };
+        } catch (error) {
+          console.error('认证失败:', error);
+          throw error;
         }
-
-        const client = await clientPromise;
-        const db = client.db("fortarc");
-        const user = await db.collection("users").findOne({ email: credentials.email });
-
-        if (!user || !user.hashedPassword) {
-          throw new Error("用户不存在");
-        }
-
-        const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
-          user.hashedPassword
-        );
-
-        if (!isCorrectPassword) {
-          throw new Error("密码错误");
-        }
-
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.name,
-          image: user.image
-        };
       }
     })
   ],
