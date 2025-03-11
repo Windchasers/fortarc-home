@@ -26,6 +26,20 @@ const ProductDetailPage: FC = () => {
         }
         const data = await response.json();
         setProduct(data);
+        
+        // 初始化规格选择状态
+        if (data.specs && Array.isArray(data.specs)) {
+          setSelectedSpecs({ size: data.specs[0] });
+        } else if (data.specs && typeof data.specs === 'object') {
+          // 如果是对象格式，为每个规格类型选择第一个值
+          const initialSpecs: {[key: string]: string} = {};
+          Object.entries(data.specs).forEach(([key, values]: [string, any]) => {
+            if (Array.isArray(values) && values.length > 0) {
+              initialSpecs[key] = values[0];
+            }
+          });
+          setSelectedSpecs(initialSpecs);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : '商品获取失败');
       } finally {
@@ -116,25 +130,50 @@ const ProductDetailPage: FC = () => {
             <div className="mb-8">
               <h2 className="font-semibold mb-4">商品规格</h2>
               <div className="space-y-6">
-                {Object.entries(product.specs || {}).map(([key, values]: [string, any]) => (
-                  <div key={key}>
-                    <p className="text-gray-600 mb-3">{key}</p>
+                {Array.isArray(product.specs) ? (
+                  <div>
+                    <p className="text-gray-600 mb-3">尺码</p>
                     <div className="flex flex-wrap gap-3">
-                      {Array.isArray(values) ? values.map((value: string) => (
+                      {product.specs.map((size: string) => (
                         <button
-                          key={value}
-                          onClick={() => setSelectedSpecs(prev => ({ ...prev, [key]: value }))}
-                          className={`px-6 py-2.5 border rounded-full transition-all ${selectedSpecs[key] === value ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-gray-400'}`}
+                          key={size}
+                          onClick={() => setSelectedSpecs({ size })}
+                          className={`px-6 py-2.5 border rounded-full transition-all ${selectedSpecs.size === size ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-gray-400'}`}
                         >
-                          {value}
+                          {size}
                         </button>
-                      )) : null}
+                      ))}
                     </div>
                   </div>
-                ))}
+                ) : (
+                  Object.entries(product.specs || {}).map(([key, values]: [string, any]) => (
+                    <div key={key}>
+                      <p className="text-gray-600 mb-3">{key}</p>
+                      <div className="flex flex-wrap gap-3">
+                        {Array.isArray(values) ? values.map((value: string) => (
+                          <button
+                            key={value}
+                            onClick={() => setSelectedSpecs(prev => ({ ...prev, [key]: value }))}
+                            className={`px-6 py-2.5 border rounded-full transition-all ${selectedSpecs[key] === value ? 'border-black bg-black text-white' : 'border-gray-200 hover:border-gray-400'}`}
+                          >
+                            {value}
+                          </button>
+                        )) : null}
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
-            <button className="w-full py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors mb-4">
+            <button 
+              className="w-full py-4 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors mb-4"
+              onClick={() => {
+                // 这里可以添加加入购物车的逻辑
+                console.log('加入购物车', { product, selectedSpecs });
+                // 可以添加一个提示或者其他反馈
+                alert(`已添加到购物车: ${product.name}, 规格: ${JSON.stringify(selectedSpecs)}`);
+              }}
+            >
               加入购物车
             </button>
             <div className="prose prose-sm max-w-none">

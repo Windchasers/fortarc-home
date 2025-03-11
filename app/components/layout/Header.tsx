@@ -32,6 +32,7 @@ const Header: FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   // 获取购物车数据
   const fetchCartItems = async () => {
@@ -114,6 +115,22 @@ const Header: FC = () => {
     e.preventDefault();
     // 这里可以添加实际的搜索逻辑
     console.log('搜索关键词:', searchQuery);
+    
+    // 模拟搜索结果
+    const mockResults = [
+      { id: '1', name: '经典黑色T恤', price: 199, image: '/products/product-1.jpg' },
+      { id: '2', name: '休闲牛仔裤', price: 299, image: '/products/product-2.jpg' },
+      { id: '3', name: '时尚连帽卫衣', price: 359, image: '/products/product-3.jpg' }
+    ];
+    
+    // 根据搜索词过滤结果（实际项目中应该从API获取）
+    setSearchResults(
+      searchQuery.trim() === '' 
+        ? mockResults 
+        : mockResults.filter(p => 
+            p.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+    );
   };
 
   const closeSearch = () => {
@@ -201,8 +218,8 @@ const Header: FC = () => {
                 {session?.user ? (
                   <>
                     <div className="px-4 py-2 border-b">
-                      <p className="font-medium">{session.user.name || '用户'}</p>
-                      <p className="text-sm text-gray-600">{session.user.email}</p>
+                      <p className="font-medium truncate">{session.user.name || '用户'}</p>
+                      <p className="text-sm text-gray-600 truncate">{session.user.email}</p>
                     </div>
                     <Link
                       href="/account"
@@ -286,7 +303,7 @@ const Header: FC = () => {
 
             <div className="p-4 max-h-[60vh] overflow-y-auto">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {searchResults.map((product) => (
+                {searchResults && searchResults.length > 0 ? searchResults.map((product) => (
                   <Link
                     key={product.id}
                     href={`/products/${product.id}`}
@@ -304,7 +321,11 @@ const Header: FC = () => {
                     <h3 className="font-semibold mb-1">{product.name}</h3>
                     <p className="text-gray-600">¥{product.price}</p>
                   </Link>
-                ))}
+                )) : (
+                  <div className="col-span-3 py-8 text-center text-gray-500">
+                    {searchQuery.trim() !== '' ? '没有找到相关商品' : '请输入关键词搜索'}
+                  </div>
+                )}
               </div>
             </div>
           </div>
