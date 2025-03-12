@@ -1,11 +1,18 @@
+'use client';
+
 import { FC, ReactNode } from 'react';
 import Header from './Header';
+import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface MainLayoutProps {
   children: ReactNode;
 }
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+  const locale = useLocale();
+  const t = useTranslations('footer');
+  
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -16,31 +23,31 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="font-bold mb-4">关于FORTARC</h3>
+              <h3 className="font-bold mb-4">{t('aboutUs')}</h3>
               <ul className="space-y-2">
-                <li><a href="/about" className="hover:text-gray-600">品牌介绍</a></li>
-                <li><a href="/contact" className="hover:text-gray-600">联系我们</a></li>
-                <li><a href="/careers" className="hover:text-gray-600">加入我们</a></li>
+                <li><Link href={`/${locale}/about`} className="hover:text-gray-600">{t('brandIntro')}</Link></li>
+                <li><Link href={`/${locale}/contact`} className="hover:text-gray-600">{t('contactUs')}</Link></li>
+                <li><Link href={`/${locale}/careers`} className="hover:text-gray-600">{t('joinUs')}</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">客户服务</h3>
+              <h3 className="font-bold mb-4">{t('customerService')}</h3>
               <ul className="space-y-2">
-                <li><a href="/shipping" className="hover:text-gray-600">配送说明</a></li>
-                <li><a href="/returns" className="hover:text-gray-600">退换政策</a></li>
-                <li><a href="/size-guide" className="hover:text-gray-600">尺码指南</a></li>
+                <li><Link href={`/${locale}/shipping`} className="hover:text-gray-600">{t('shippingInfo')}</Link></li>
+                <li><Link href={`/${locale}/returns`} className="hover:text-gray-600">{t('returnPolicy')}</Link></li>
+                <li><Link href={`/${locale}/size-guide`} className="hover:text-gray-600">{t('sizeGuide')}</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">会员中心</h3>
+              <h3 className="font-bold mb-4">{t('memberCenter')}</h3>
               <ul className="space-y-2">
-                <li><a href="/account" className="hover:text-gray-600">我的账户</a></li>
-                <li><a href="/orders" className="hover:text-gray-600">订单查询</a></li>
-                <li><a href="/wishlist" className="hover:text-gray-600">心愿清单</a></li>
+                <li><Link href={`/${locale}/account`} className="hover:text-gray-600">{t('myAccount')}</Link></li>
+                <li><Link href={`/${locale}/orders`} className="hover:text-gray-600">{t('orderTracking')}</Link></li>
+                <li><Link href={`/${locale}/wishlist`} className="hover:text-gray-600">{t('wishlist')}</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="font-bold mb-4">关注我们</h3>
+              <h3 className="font-bold mb-4">{t('followUs')}</h3>
               <div className="flex space-x-4">
                 <a href="#" className="hover:text-gray-600">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">

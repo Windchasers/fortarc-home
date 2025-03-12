@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import LanguageSwitcher from '../ui/LanguageSwitcher';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface CartItem {
   productId: string;
@@ -24,6 +26,8 @@ interface CartItem {
 const Header: FC = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const t = useTranslations();
+  const locale = useLocale();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -154,16 +158,17 @@ const Header: FC = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold">FORTARC</Link>
+        <Link href={`/${locale}`} className="text-2xl font-bold">FORTARC</Link>
         
         <div className="hidden md:flex items-center space-x-8">
-          <Link href="/brand" className="hover:text-gray-600 transition-colors">品牌故事</Link>
-          <Link href="/products" className="hover:text-gray-600 transition-colors">产品系列</Link>
-          <Link href="/lookbook" className="hover:text-gray-600 transition-colors">搭配灵感</Link>
-          <Link href="/community" className="hover:text-gray-600 transition-colors">社区</Link>
+          <Link href={`/${locale}/brand`} className="hover:text-gray-600 transition-colors">{t('common.brand')}</Link>
+          <Link href={`/${locale}/products`} className="hover:text-gray-600 transition-colors">{t('products.title')}</Link>
+          <Link href={`/${locale}/lookbook`} className="hover:text-gray-600 transition-colors">{t('common.lookbook')}</Link>
+          <Link href={`/${locale}/community`} className="hover:text-gray-600 transition-colors">{t('common.community')}</Link>
         </div>
 
         <div className="flex items-center space-x-4">
+          <LanguageSwitcher />
           <button
             onClick={() => setIsSearchOpen(true)}
             className="hover:text-gray-600 transition-colors"
@@ -218,28 +223,28 @@ const Header: FC = () => {
                 {session?.user ? (
                   <>
                     <div className="px-4 py-2 border-b">
-                      <p className="font-medium truncate">{session.user.name || '用户'}</p>
+                      <p className="font-medium truncate">{session.user.name || t('account.user')}</p>
                       <p className="text-sm text-gray-600 truncate">{session.user.email}</p>
                     </div>
                     <Link
-                      href="/account"
+                      href={`/${locale}/account`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      个人中心
+                      {t('account.title')}
                     </Link>
                     <Link
-                      href="/account/orders"
+                      href={`/${locale}/account/orders`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      我的订单
+                      {t('account.orders')}
                     </Link>
                     <button
                       onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      退出登录
+                      {t('auth.signOut')}
                     </button>
                   </>
                 ) : (
@@ -251,14 +256,14 @@ const Header: FC = () => {
                       }}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
-                      登录
+                      {t('auth.signIn')}
                     </button>
                     <Link
-                      href="/auth/signup"
+                      href={`/${locale}/auth/signup`}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      注册
+                      {t('auth.signUp')}
                     </Link>
                   </>
                 )}
@@ -274,7 +279,7 @@ const Header: FC = () => {
           <div className="bg-white w-full max-w-4xl mx-4 rounded-lg shadow-xl">
             <div className="p-4 border-b">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">搜索商品</h2>
+                <h2 className="text-xl font-semibold">{t('products.search')}</h2>
                 <button
                   onClick={closeSearch}
                   className="text-gray-500 hover:text-gray-700"
@@ -289,14 +294,14 @@ const Header: FC = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="输入关键词搜索"
+                  placeholder={t('products.searchPlaceholder')}
                   className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
                 />
                 <button
                   type="submit"
                   className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  搜索
+                  {t('products.searchButton')}
                 </button>
               </form>
             </div>
@@ -306,7 +311,7 @@ const Header: FC = () => {
                 {searchResults && searchResults.length > 0 ? searchResults.map((product) => (
                   <Link
                     key={product.id}
-                    href={`/products/${product.id}`}
+                    href={`/${locale}/products/${product.id}`}
                     onClick={closeSearch}
                     className="group block"
                   >
@@ -323,7 +328,7 @@ const Header: FC = () => {
                   </Link>
                 )) : (
                   <div className="col-span-3 py-8 text-center text-gray-500">
-                    {searchQuery.trim() !== '' ? '没有找到相关商品' : '请输入关键词搜索'}
+                    {searchQuery.trim() !== '' ? t('products.noResults') : t('products.enterKeyword')}
                   </div>
                 )}
               </div>
@@ -339,7 +344,7 @@ const Header: FC = () => {
           <div className="relative bg-white border-t shadow-xl transform transition-transform duration-300 ease-out">
             <div className="container mx-auto px-4 py-4">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">购物车</h2>
+                <h2 className="text-xl font-semibold">{t('cart.title')}</h2>
                 <button
                   onClick={() => setIsCartOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
@@ -353,7 +358,7 @@ const Header: FC = () => {
               <div className="max-h-[60vh] overflow-y-auto">
                 {cartItems.length === 0 ? (
                   <div className="text-center py-8">
-                    <p className="text-gray-500">购物车是空的</p>
+                    <p className="text-gray-500">{t('cart.empty')}</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -403,15 +408,16 @@ const Header: FC = () => {
               {cartItems.length > 0 && (
                 <div className="mt-6 pt-6 border-t">
                   <div className="flex justify-between mb-4">
-                    <span className="font-semibold">总计</span>
+                    <span className="font-semibold">{t('cart.total')}</span>
                     <span className="font-semibold">¥{total}</span>
                   </div>
-                  <button
-                    onClick={() => console.log('结算', cartItems)}
-                    className="w-full py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  <Link
+                    href={`/${locale}/checkout`}
+                    onClick={() => setIsCartOpen(false)}
+                    className="block w-full py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-center"
                   >
-                    结算
-                  </button>
+                    {t('cart.checkout')}
+                  </Link>
                 </div>
               )}
             </div>
@@ -423,20 +429,20 @@ const Header: FC = () => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-[20vh]">
           <div className="bg-white w-full max-w-sm mx-4 rounded-lg shadow-xl">
             <div className="p-6">
-              <h3 className="text-lg font-semibold mb-4">确认退出登录</h3>
-              <p className="text-gray-600 mb-6">您确定要退出登录吗？</p>
+              <h3 className="text-lg font-semibold mb-4">{t('auth.confirmSignOut')}</h3>
+              <p className="text-gray-600 mb-6">{t('auth.confirmSignOutMessage')}</p>
               <div className="flex justify-end gap-4">
                 <button
                   onClick={() => setIsLogoutConfirmOpen(false)}
                   className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
                 >
-                  取消
+                  {t('common.cancel')}
                 </button>
                 <button
                   onClick={confirmSignOut}
                   className="px-4 py-2 text-sm text-white bg-black hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  确认退出
+                  {t('auth.confirmButton')}
                 </button>
               </div>
             </div>

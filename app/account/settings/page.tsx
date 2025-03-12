@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
+import { useTranslations } from 'next-intl';
 
 const SettingsPage: FC = () => {
   const router = useRouter();
@@ -15,6 +16,12 @@ const SettingsPage: FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [dataSharing, setDataSharing] = useState(false);
+  
+  // 获取翻译
+  const t = useTranslations();
+  const commonT = useTranslations('common');
+  const settingsT = useTranslations('settings');
+  const authT = useTranslations('auth');
 
   // 检查用户是否已登录
   useEffect(() => {
@@ -37,12 +44,12 @@ const SettingsPage: FC = () => {
     e.preventDefault();
     
     if (!currentPassword || !newPassword || !confirmPassword) {
-      toast.error('请填写所有密码字段');
+      toast.error(authT('fillAllFields'));
       return;
     }
     
     if (newPassword !== confirmPassword) {
-      toast.error('两次输入的新密码不一致');
+      toast.error(authT('newPasswordMismatch'));
       return;
     }
     
@@ -51,7 +58,7 @@ const SettingsPage: FC = () => {
     // 模拟API请求
     setTimeout(() => {
       setIsLoading(false);
-      toast.success('密码修改成功');
+      toast.success(authT('passwordChanged'));
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
@@ -65,7 +72,7 @@ const SettingsPage: FC = () => {
     // 模拟API请求
     setTimeout(() => {
       setIsLoading(false);
-      toast.success('通知设置已保存');
+      toast.success(settingsT('settingsSaved'));
     }, 1000);
   };
 
@@ -76,7 +83,7 @@ const SettingsPage: FC = () => {
     // 模拟API请求
     setTimeout(() => {
       setIsLoading(false);
-      toast.success('隐私设置已保存');
+      toast.success(settingsT('privacySaved'));
     }, 1000);
   };
 
@@ -88,7 +95,7 @@ const SettingsPage: FC = () => {
             FORTARC
           </Link>
           <Link href="/" className="text-sm text-gray-600 hover:text-black">
-            返回首页
+            {commonT('backToHome')}
           </Link>
         </div>
       </nav>
@@ -100,17 +107,17 @@ const SettingsPage: FC = () => {
                 <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
             </Link>
-            <h1 className="text-3xl font-bold">账户设置</h1>
+            <h1 className="text-3xl font-bold">{settingsT('title')}</h1>
           </div>
         
         <div className="space-y-8">
           {/* 修改密码 */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold mb-4">修改密码</h2>
+            <h2 className="text-xl font-semibold mb-4">{settingsT('changePassword')}</h2>
             <form onSubmit={handleChangePassword} className="space-y-4">
               <div>
                 <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                  当前密码
+                  {authT('currentPassword')}
                 </label>
                 <input
                   id="currentPassword"
@@ -122,7 +129,7 @@ const SettingsPage: FC = () => {
               </div>
               <div>
                 <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                  新密码
+                  {authT('newPassword')}
                 </label>
                 <input
                   id="newPassword"
@@ -134,7 +141,7 @@ const SettingsPage: FC = () => {
               </div>
               <div>
                 <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                  确认新密码
+                  {authT('confirmNewPassword')}
                 </label>
                 <input
                   id="confirmPassword"
@@ -148,14 +155,14 @@ const SettingsPage: FC = () => {
                 type="submit"
                 className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
-                修改密码
+                {settingsT('changePassword')}
               </button>
             </form>
           </div>
           
           {/* 通知设置 */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-xl font-semibold mb-4">通知设置</h2>
+            <h2 className="text-xl font-semibold mb-4">{settingsT('notifications')}</h2>
             <div className="space-y-4">
               <div className="flex items-center">
                 <input
@@ -166,7 +173,7 @@ const SettingsPage: FC = () => {
                   className="mr-2 h-4 w-4"
                 />
                 <label htmlFor="emailNotifications" className="text-gray-700">
-                  接收邮件通知
+                  {settingsT('emailNotifications')}
                 </label>
               </div>
               <div className="flex items-center">
@@ -176,7 +183,7 @@ const SettingsPage: FC = () => {
                   className="mr-2 h-4 w-4"
                 />
                 <label htmlFor="orderUpdates" className="text-gray-700">
-                  订单状态更新
+                  {settingsT('orderUpdates')}
                 </label>
               </div>
               <div className="flex items-center">
@@ -186,14 +193,14 @@ const SettingsPage: FC = () => {
                   className="mr-2 h-4 w-4"
                 />
                 <label htmlFor="promotions" className="text-gray-700">
-                  促销和优惠信息
+                  {settingsT('promotions')}
                 </label>
               </div>
               <button
                 onClick={handleSaveNotificationSettings}
                 className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
-                保存设置
+                {settingsT('saveSettings')}
               </button>
             </div>
           </div>
@@ -228,7 +235,7 @@ const SettingsPage: FC = () => {
                 onClick={handleSavePrivacySettings}
                 className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
               >
-                保存设置
+                {settingsT('saveSettings')}
               </button>
             </div>
           </div>

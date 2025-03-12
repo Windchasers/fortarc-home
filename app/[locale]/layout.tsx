@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import ClientProvider from './components/providers/ClientProvider';
+import "../globals.css";
+import ClientProvider from '../components/providers/ClientProvider';
 import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
@@ -19,23 +19,16 @@ export const metadata: Metadata = {
   description: "FORTARC致力于打造高品质服饰，传递优雅生活美学，将现代设计与传统工艺完美融合。",
 };
 
-export default function RootLayout({
+export default function LocaleLayout({
   children,
   params
 }: Readonly<{
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  const locale = params.locale || 'zh';
-  
   return (
-    <html lang={locale}>
-      <body className={geistSans.className}>
-        <ClientProvider>
-          <Toaster position="top-center" />
-          {children}
-        </ClientProvider>
-      </body>
-    </html>
+    <>
+      {children}
+    </>
   );
 }
