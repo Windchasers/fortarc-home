@@ -22,10 +22,7 @@ export const metadata: Metadata = {
 export default function LocaleLayout({
   children,
   params
-}: Readonly<{
-  children: React.ReactNode;
-  params: { locale: string };
-}>) {
+}: any) {
   return (
     <>
       {children}

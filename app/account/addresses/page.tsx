@@ -171,6 +171,7 @@ const AddressesPage: FC = () => {
         )}
       </div>
     </div>
+    </div>
   );
 };
 

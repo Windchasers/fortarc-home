@@ -143,5 +143,276 @@
     "orderTracking": "注文追跡",
     "wishlist": "お気に入り",
     "followUs": "フォローする"
+  },
+  "community": {
+    "pageTitle": "コミュニティ",
+    "heroTitle": "FORTARCファッションコミュニティに参加",
+    "heroSubtitle": "インスピレーションを共有し、スタイルを探求し、仲間とつながる",
+    "joinButton": "今すぐ参加",
+    "featuredPosts": "注目の投稿",
+    "latestPosts": "最新の投稿",
+    "trendingTopics": "トレンドトピック",
+    "events": "オフラインイベント",
+    "upcomingEvents": "開催予定のイベント",
+    "pastEvents": "過去のイベント",
+    "shareYourStyle": "あなたのスタイルを共有",
+    "uploadPhoto": "写真をアップロード",
+    "styleGallery": "スタイルギャラリー",
+    "discussions": "ディスカッション",
+    "joinDiscussion": "ディスカッションに参加",
+    "createPost": "投稿を作成",
+    "comments": "コメント",
+    "likes": "いいね",
+    "shares": "シェア",
+    "readMore": "続きを読む",
+    "viewAll": "すべて表示",
+    "searchCommunity": "コミュニティを検索",
+    "popularTags": "人気のタグ",
+    "followTag": "タグをフォロー",
+    "members": "メンバー",
+    "activeMember": "アクティブメンバー",
+    "newMember": "新規メンバー",
+    "memberSince": "参加日",
+    "posts": "投稿",
+    "followers": "フォロワー",
+    "following": "フォロー中",
+    "follow": "フォロー",
+    "unfollow": "フォロー解除",
+    "postTypes": {
+      "style": "スタイル投稿",
+      "review": "レビュー",
+      "question": "質問",
+      "discussion": "ディスカッション",
+      "event": "イベント"
+    },
+    "postStatus": {
+      "draft": "下書き",
+      "published": "公開済み",
+      "archived": "アーカイブ"
+    },
+    "interactions": {
+      "like": "いいね",
+      "comment": "コメント",
+      "share": "シェア",
+      "save": "保存",
+      "report": "報告"
+    },
+    "notifications": {
+      "newFollower": "新しいフォロワー",
+      "newComment": "新しいコメント",
+      "newLike": "新しいいいね",
+      "mentioned": "メンション",
+      "tagged": "タグ付け"
+    },
+    "moderation": {
+      "reportPost": "投稿を報告",
+      "reportReason": "報告理由",
+      "inappropriate": "不適切な内容",
+      "spam": "スパム",
+      "harassment": "ハラスメント",
+      "other": "その他",
+      "reportSubmitted": "報告が送信されました",
+      "thankYou": "ご報告ありがとうございます"
+    },
+    "guidelines": {
+      "title": "コミュニティガイドライン",
+      "beRespectful": "お互いを尊重する",
+      "noSpam": "スパムを避ける",
+      "appropriateContent": "適切なコンテンツを投稿する",
+      "followRules": "ルールを守る",
+      "reportIssues": "問題を報告する"
+    }
+  },
+  "brand": {
+    "heroSubtitle": "最高品質を追求し、エレガントなライフスタイル美学を伝える",
+    "designPhilosophy": "デザイン哲学",
+    "philosophyDesc": "FORTARCは「Less is More」のデザイン哲学に基づき、現代的な美学と伝統的な職人技を完璧に融合させています。私たちは、真の贅沢は表面的な装飾ではなく、細部へのこだわりにあると信じています。",
+    "sustainableFashion": "サステナブルファッション",
+    "sustainableDesc": "環境に配慮した素材、持続可能なデザイン",
+    "craftsmanship": "職人技",
+    "craftsmanshipDesc": "卓越した技術、心を込めた制作",
+    "designPhilosophyAlt": "デザイン哲学",
+    "creativeTeam": "クリエイティブチーム",
+    "designerAlt": "デザイナー",
+    "designer": "デザイナー",
+    "designerDesc": "長年のファッションデザイン経験を持ち、美しさと実用性を兼ね備えた服飾作品の創造に取り組んでいます。",
+    "materialSource": "素材の源流",
+    "materialMap": "インタラクティブ素材マップ",
+    "organicCotton": "オーガニックコットン",
+    "naturalWool": "天然ウール",
+    "ecoLeather": "エコレザー",
+    "biodegradableFabric": "生分解性素材",
+    "materialDesc": "世界中から厳選された高品質な原材料を使用し、各工程を厳密に管理し、製品の品質を確保しています。",
+    "ourStory": "私たちの物語",
+    "storyDesc": "FORTARCは、ファッションの本質を追求し、持続可能な未来を創造するという使命のもと、2010年に設立されました。",
+    "ourValues": "私たちの価値観",
+    "sustainability": "サステナビリティ",
+    "sustainabilityDesc": "環境への影響を最小限に抑え、持続可能な素材と製造プロセスを採用しています。",
+    "quality": "品質",
+    "qualityDesc": "最高品質の素材と職人技を使用し、耐久性と快適性を両立させています。",
+    "innovation": "イノベーション",
+    "innovationDesc": "伝統的な技術と現代的なデザインを融合させ、革新的なファッションを創造しています。",
+    "craftsmanshipTitle": "職人技へのこだわり",
+    "craftsmanshipDetail": "各製品は熟練した職人によって丁寧に制作され、細部までこだわった品質を実現しています。",
+    "sustainablePractices": "持続可能な取り組み",
+    "sustainablePracticesDesc": "環境に配慮した素材の使用、廃棄物の削減、リサイクル可能な包装など、持続可能な取り組みを推進しています。",
+    "futureVision": "未来へのビジョン",
+    "futureVisionDesc": "ファッション業界のリーダーとして、持続可能な未来の創造に貢献することを目指しています。",
+    "joinUs": "私たちと共に",
+    "joinUsDesc": "FORTARCの旅に参加し、持続可能なファッションの未来を共に創造しましょう。",
+    "contactUs": "お問い合わせ",
+    "contactUsDesc": "ご質問やご意見がございましたら、お気軽にお問い合わせください。",
+    "pressKit": "プレスキット",
+    "pressKitDesc": "メディアの方々向けの情報や素材をご用意しています。",
+    "careers": "採用情報",
+    "careersDesc": "FORTARCと共に、ファッションの未来を創造しませんか？",
+    "sustainabilityReport": "サステナビリティレポート",
+    "sustainabilityReportDesc": "私たちの環境への取り組みと成果をご覧ください。",
+    "certifications": "認証",
+    "certificationsDesc": "品質と持続可能性に関する国際認証を取得しています。",
+    "partnerships": "パートナーシップ",
+    "partnershipsDesc": "持続可能な未来の創造に向けて、様々なパートナーと協力しています。",
+    "innovationLab": "イノベーションラボ",
+    "innovationLabDesc": "新しい素材や技術の研究開発に取り組んでいます。",
+    "heritage": "伝統",
+    "heritageDesc": "伝統的な職人技を現代的なデザインに活かしています。",
+    "future": "未来",
+    "futureDesc": "持続可能なファッションの未来を創造しています。"
+  },
+  "lookbook": {
+    "pageTitle": "ルックブック",
+    "seasonalTitle": "シーズナルスタイル",
+    "occasionTitle": "シーン別スタイル",
+    "styleTitle": "スタイルインスピレーション",
+    "spring": {
+      "title": "春のフレッシュスタイル",
+      "description": "軽やかで柔らかな春のコーディネートで、自然な魅力を表現",
+      "items": {
+        "0": "リネンブラウス",
+        "1": "カジュアルパンツ",
+        "2": "キャンバスシューズ"
+      }
+    },
+    "summer": {
+      "title": "夏のビーチスタイル",
+      "description": "爽やかで快適な夏のコーディネートで、リゾート気分を演出",
+      "items": {
+        "0": "コットンTシャツ",
+        "1": "リネンショートパンツ",
+        "2": "サンダル"
+      }
+    },
+    "autumn": {
+      "title": "秋のレイヤードスタイル",
+      "description": "重ね着で表現する秋のコーディネートで、温かみのある雰囲気を演出",
+      "items": {
+        "0": "ニットセーター",
+        "1": "デニムパンツ",
+        "2": "レザーブーツ"
+      }
+    },
+    "winter": {
+      "title": "冬のエレガントスタイル",
+      "description": "温かくスタイリッシュな冬のコーディネートで、エレガントな雰囲気を演出",
+      "items": {
+        "0": "ウールコート",
+        "1": "タートルネックセーター",
+        "2": "ロングブーツ"
+      }
+    },
+    "business": {
+      "title": "ビジネスエリート",
+      "description": "ビジネスシーンにふさわしい、プロフェッショナルな印象を与えるコーディネート"
+    },
+    "casual": {
+      "title": "カジュアルウィークエンド",
+      "description": "リラックスした週末にぴったりの、くつろぎ感のあるコーディネート"
+    },
+    "party": {
+      "title": "パーティー＆デート",
+      "description": "注目を集める、華やかなパーティースタイル"
+    },
+    "minimal": {
+      "title": "ミニマリスト",
+      "description": "シンプルで洗練された、ミニマルな美学を表現するコーディネート"
+    },
+    "street": {
+      "title": "ストリートファッション",
+      "description": "個性的で目を引く、トレンド感のあるコーディネート"
+    },
+    "vintage": {
+      "title": "レトロ＆ビンテージ",
+      "description": "懐かしさとエレガンスを感じる、レトロなスタイル"
+    },
+    "modern": {
+      "title": "モダンシティ",
+      "description": "都会的な洗練さを表現する、モダンなコーディネート"
+    },
+    "filter": {
+      "title": "フィルター",
+      "season": "シーズン",
+      "occasion": "シーン",
+      "style": "スタイル",
+      "color": "カラー",
+      "price": "価格帯",
+      "apply": "適用",
+      "reset": "リセット"
+    },
+    "sort": {
+      "title": "並び替え",
+      "newest": "新着順",
+      "popular": "人気順",
+      "priceLow": "価格が安い順",
+      "priceHigh": "価格が高い順"
+    },
+    "view": {
+      "grid": "グリッド表示",
+      "list": "リスト表示",
+      "gallery": "ギャラリー表示"
+    },
+    "share": {
+      "title": "シェア",
+      "copy": "リンクをコピー",
+      "facebook": "Facebookでシェア",
+      "twitter": "Twitterでシェア",
+      "instagram": "Instagramでシェア",
+      "pinterest": "Pinterestでシェア",
+      "copied": "リンクをコピーしました"
+    },
+    "details": {
+      "title": "コーディネート詳細",
+      "items": "使用アイテム",
+      "description": "スタイルの説明",
+      "styling": "スタイリングのポイント",
+      "tips": "着こなしのコツ",
+      "related": "関連するコーディネート",
+      "save": "お気に入りに保存",
+      "saved": "お気に入りに保存しました"
+    },
+    "inspiration": {
+      "title": "インスピレーション",
+      "trending": "トレンド",
+      "editorial": "エディトリアル",
+      "street": "ストリートスナップ",
+      "celebrity": "セレブリティスタイル",
+      "runway": "ランウェイ",
+      "backstage": "バックステージ"
+    },
+    "seasonalGuide": {
+      "title": "シーズナルガイド",
+      "spring": "春の着こなしガイド",
+      "summer": "夏の着こなしガイド",
+      "autumn": "秋の着こなしガイド",
+      "winter": "冬の着こなしガイド",
+      "transition": "季節の変わり目の着こなし"
+    },
+    "stylingTips": {
+      "title": "スタイリングのコツ",
+      "layering": "重ね着のテクニック",
+      "accessories": "アクセサリーの使い方",
+      "color": "カラーコーディネート",
+      "proportion": "プロポーションの調整",
+      "occasion": "シーン別スタイリング"
+    }
   }
 }

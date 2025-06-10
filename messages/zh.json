@@ -6,7 +6,22 @@
     "brand": "品牌故事",
     "lookbook": "搭配灵感",
     "community": "社区",
-    "cancel": "取消"
+    "cancel": "取消",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "confirm": "确认",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "view": "查看",
+    "close": "关闭",
+    "more": "更多",
+    "less": "收起"
   },
   "home": {
     "heroTitle": "探索无界时尚",
@@ -22,6 +37,132 @@
     "philosophyDesc2": "我们相信，真正的奢华不仅仅体现在表面，更在于内在的品质和工艺。",
     "exploreBrand": "探索品牌故事",
     "designPhilosophyAlt": "FORTARC设计理念"
+  },
+  "brand": {
+    "heroSubtitle": "追求极致品质，传递优雅生活美学",
+    "designPhilosophy": "设计哲学",
+    "philosophyDesc": "FORTARC秉承\"Less is More\"的设计理念，将现代美学与传统工艺完美融合。我们相信，真正的奢华不在于表面的装饰，而在于对细节的极致追求。",
+    "sustainableFashion": "可持续时尚",
+    "sustainableDesc": "环保材质，永续设计",
+    "craftsmanship": "匠心工艺",
+    "craftsmanshipDesc": "精湛技艺，用心制作",
+    "designPhilosophyAlt": "设计哲学",
+    "creativeTeam": "创意团队",
+    "designerAlt": "设计师",
+    "designer": "设计师",
+    "designerDesc": "拥有多年时尚设计经验，致力于创造兼具美感与实用性的服装作品。",
+    "materialSource": "材质溯源",
+    "materialMap": "互动式材质溯源地图",
+    "organicCotton": "有机棉",
+    "naturalWool": "天然羊毛",
+    "ecoLeather": "环保皮革",
+    "biodegradableFabric": "可降解面料",
+    "materialDesc": "精选全球优质原材料，严格把控每一个环节，确保产品品质。"
+  },
+  "lookbook": {
+    "pageTitle": "搭配灵感",
+    "seasonalTitle": "季节搭配",
+    "occasionTitle": "场景搭配",
+    "styleTitle": "风格灵感",
+    "spring": {
+      "title": "春季清新",
+      "description": "轻盈柔和的春季搭配，展现自然清新的魅力",
+      "items": {
+        "0": "亚麻衬衫",
+        "1": "休闲长裤",
+        "2": "帆布鞋"
+      }
+    },
+    "summer": {
+      "title": "夏日海风",
+      "description": "清爽舒适的夏季穿搭，演绎度假休闲风情",
+      "items": {
+        "0": "棉质T恤",
+        "1": "亚麻短裤",
+        "2": "凉鞋"
+      }
+    },
+    "autumn": {
+      "title": "秋日暖阳",
+      "description": "层次丰富的秋季搭配，营造温暖文艺氛围",
+      "items": {
+        "0": "针织衫",
+        "1": "牛仔裤",
+        "2": "皮靴"
+      }
+    },
+    "winter": {
+      "title": "冬日优雅",
+      "description": "保暖时尚的冬季穿搭，突显优雅气质",
+      "items": {
+        "0": "羊毛大衣",
+        "1": "高领毛衣",
+        "2": "长靴"
+      }
+    },
+    "business": {
+      "title": "商务精英",
+      "description": "正装搭配，展现职场专业形象"
+    },
+    "casual": {
+      "title": "休闲周末",
+      "description": "舒适随性的休闲搭配"
+    },
+    "party": {
+      "title": "派对约会",
+      "description": "时尚吸睛的派对装扮"
+    },
+    "minimal": {
+      "title": "极简主义",
+      "description": "简约纯粹的搭配美学"
+    },
+    "street": {
+      "title": "街头时尚",
+      "description": "个性张扬的潮流穿搭"
+    },
+    "vintage": {
+      "title": "复古文艺",
+      "description": "怀旧优雅的复古风格"
+    },
+    "modern": {
+      "title": "摩登都市",
+      "description": "现代感十足的都市风尚"
+    }
+  },
+  "community": {
+    "pageTitle": "社区",
+    "heroTitle": "加入FORTARC时尚社区",
+    "heroSubtitle": "分享灵感，探索风格，连接同好",
+    "joinButton": "立即加入",
+    "featuredPosts": "精选内容",
+    "latestPosts": "最新动态",
+    "trendingTopics": "热门话题",
+    "events": "线下活动",
+    "upcomingEvents": "即将举行的活动",
+    "pastEvents": "往期活动回顾",
+    "shareYourStyle": "分享你的风格",
+    "uploadPhoto": "上传照片",
+    "styleGallery": "风格画廊",
+    "discussions": "讨论区",
+    "joinDiscussion": "参与讨论",
+    "createPost": "发布内容",
+    "comments": "评论",
+    "likes": "点赞",
+    "shares": "分享",
+    "readMore": "阅读更多",
+    "viewAll": "查看全部",
+    "searchCommunity": "搜索社区内容",
+    "popularTags": "热门标签",
+    "followTag": "关注标签",
+    "members": "社区成员",
+    "activeMember": "活跃成员",
+    "newMember": "新成员",
+    "memberSince": "加入时间",
+    "posts": "发布",
+    "followers": "关注者",
+    "following": "正在关注",
+    "follow": "关注",
+    "unfollow": "取消关注"
   },
   "products": {
     "title": "产品系列",
@@ -89,13 +230,57 @@
     "username": "用户名",
     "email": "邮箱",
     "editProfile": "编辑资料",
-    "addAddress": "添加新地址",
+    "editProfileComingSoon": "编辑资料功能正在开发中",
+    "noOrders": "暂无订单记录",
+    "goShopping": "去购物",
     "noAddresses": "暂无收货地址",
-    "addAddressDesc": "添加收货地址，让您的购物体验更便捷",
+    "addAddress": "添加地址",
+    "addAddressComingSoon": "添加地址功能正在开发中",
+    "changePassword": "修改密码",
+    "changePasswordComingSoon": "修改密码功能正在开发中",
+    "notifications": "通知设置",
+    "emailNotifications": "接收邮件通知",
+    "privacy": "隐私设置",
+    "allowDataSharing": "允许数据分析",
+    "orderStatus": "订单状态",
+    "orderDate": "下单日期",
+    "orderTotal": "订单总额",
+    "orderDetails": "订单详情",
+    "viewOrder": "查看订单",
     "defaultAddress": "默认地址",
     "setAsDefault": "设为默认地址",
-    "edit": "编辑",
-    "delete": "删除"
+    "addressName": "收货人",
+    "addressPhone": "联系电话",
+    "addressProvince": "省份",
+    "addressCity": "城市",
+    "addressDistrict": "区县",
+    "addressDetail": "详细地址",
+    "addressPostalCode": "邮政编码",
+    "saveAddress": "保存地址",
+    "editAddress": "编辑地址",
+    "deleteAddress": "删除地址",
+    "confirmDeleteAddress": "确认删除地址",
+    "confirmDeleteAddressMessage": "确定要删除这个地址吗？",
+    "addressSaved": "地址保存成功",
+    "addressDeleted": "地址已删除",
+    "addressUpdated": "地址已更新",
+    "passwordChanged": "密码修改成功",
+    "settingsSaved": "设置已保存",
+    "profileUpdated": "个人资料已更新",
+    "uploadAvatar": "上传头像",
+    "changeAvatar": "更换头像",
+    "removeAvatar": "移除头像",
+    "avatarUpdated": "头像已更新",
+    "accountSecurity": "账户安全",
+    "loginHistory": "登录历史",
+    "recentActivity": "最近活动",
+    "accountDeletion": "注销账户",
+    "confirmAccountDeletion": "确认注销账户",
+    "confirmAccountDeletionMessage": "注销账户后，所有数据将被永久删除且无法恢复。确定要继续吗？",
+    "accountDeleted": "账户已注销",
+    "logout": "退出登录",
+    "confirmLogout": "确认退出登录",
+    "confirmLogoutMessage": "确定要退出登录吗？"
   },
   "settings": {
     "title": "账户设置",

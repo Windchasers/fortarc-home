@@ -1,16 +1,25 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
+  const { id } = context.params;
+  
+  if (!id) {
+    return NextResponse.json(
+      { error: '缺少产品ID' },
+      { status: 400 }
+    );
+  }
+
   try {
-    const { ObjectId } = require('mongodb');
     let _id;
     try {
-      _id = new ObjectId(params.id);
-    } catch (err) {
+      _id = new ObjectId(id);
+    } catch {
       return NextResponse.json(
         { error: '无效的产品ID' },
         { status: 400 }

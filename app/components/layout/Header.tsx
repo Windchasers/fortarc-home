@@ -10,11 +10,15 @@ import { toast } from 'react-hot-toast';
 import { useTranslations, useLocale } from 'next-intl';
 
 interface CartItem {
+  id: string;
   productId: string;
   quantity: number;
   specs: {
     [key: string]: string;
   };
+  image:any;
+  name: string;
+  price: number;
   product: {
     _id: string;
     name: string;

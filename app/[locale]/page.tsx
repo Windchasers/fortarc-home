@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import MainLayout from '../components/layout/MainLayout';
 import { useTranslations } from 'next-intl';
 
@@ -74,9 +75,12 @@ export default function Home() {
               <p className="text-lg text-gray-600 mb-8">
                 {t('philosophyDesc2')}
               </p>
-              <button className="border-2 border-black px-6 py-2 text-lg font-semibold hover:bg-black hover:text-white transition-colors">
+              <Link 
+                href="/brand"
+                className="inline-block border-2 border-black px-6 py-2 text-lg font-semibold hover:bg-black hover:text-white transition-colors"
+              >
                 {t('exploreBrand')}
-              </button>
+              </Link>
             </div>
             <div className="relative">
               <Image

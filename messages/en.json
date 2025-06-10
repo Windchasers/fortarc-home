@@ -23,6 +23,132 @@
     "exploreBrand": "Explore Brand Story",
     "designPhilosophyAlt": "FORTARC Design Philosophy"
   },
+  "brand": {
+    "heroSubtitle": "Pursuing Ultimate Quality, Delivering Elegant Lifestyle Aesthetics",
+    "designPhilosophy": "Design Philosophy",
+    "philosophyDesc": "FORTARC adheres to the design concept of \"Less is More\", perfectly integrating modern aesthetics with traditional craftsmanship. We believe that true luxury is not about surface decoration, but about the ultimate pursuit of details.",
+    "sustainableFashion": "Sustainable Fashion",
+    "sustainableDesc": "Eco-friendly materials, sustainable design",
+    "craftsmanship": "Craftsmanship",
+    "craftsmanshipDesc": "Exquisite skills, meticulous creation",
+    "designPhilosophyAlt": "Design Philosophy",
+    "creativeTeam": "Creative Team",
+    "designerAlt": "Designer",
+    "designer": "Designer",
+    "designerDesc": "With years of fashion design experience, dedicated to creating clothing works that combine aesthetics and practicality.",
+    "materialSource": "Material Sourcing",
+    "materialMap": "Interactive Material Sourcing Map",
+    "organicCotton": "Organic Cotton",
+    "naturalWool": "Natural Wool",
+    "ecoLeather": "Eco-friendly Leather",
+    "biodegradableFabric": "Biodegradable Fabric",
+    "materialDesc": "Selecting premium raw materials from around the world, strictly controlling every link to ensure product quality."
+  },
+  "lookbook": {
+    "pageTitle": "Lookbook",
+    "seasonalTitle": "Seasonal Styling",
+    "occasionTitle": "Occasion Styling",
+    "styleTitle": "Style Inspiration",
+    "spring": {
+      "title": "Spring Fresh",
+      "description": "Light and soft spring outfits showcasing natural freshness",
+      "items": {
+        "0": "Linen Shirt",
+        "1": "Casual Pants",
+        "2": "Canvas Shoes"
+      }
+    },
+    "summer": {
+      "title": "Summer Breeze",
+      "description": "Cool and comfortable summer outfits for a vacation vibe",
+      "items": {
+        "0": "Cotton T-shirt",
+        "1": "Linen Shorts",
+        "2": "Sandals"
+      }
+    },
+    "autumn": {
+      "title": "Autumn Warmth",
+      "description": "Layered autumn outfits creating a warm artistic atmosphere",
+      "items": {
+        "0": "Knitwear",
+        "1": "Jeans",
+        "2": "Leather Boots"
+      }
+    },
+    "winter": {
+      "title": "Winter Elegance",
+      "description": "Warm and stylish winter outfits highlighting elegant temperament",
+      "items": {
+        "0": "Wool Coat",
+        "1": "Turtleneck Sweater",
+        "2": "Long Boots"
+      }
+    },
+    "business": {
+      "title": "Business Elite",
+      "description": "Formal outfits showcasing professional image"
+    },
+    "casual": {
+      "title": "Casual Weekend",
+      "description": "Comfortable and relaxed casual outfits"
+    },
+    "party": {
+      "title": "Party Date",
+      "description": "Fashionable and eye-catching party outfits"
+    },
+    "minimal": {
+      "title": "Minimalism",
+      "description": "Simple and pure styling aesthetics"
+    },
+    "street": {
+      "title": "Street Fashion",
+      "description": "Distinctive and expressive trendy outfits"
+    },
+    "vintage": {
+      "title": "Vintage Literary",
+      "description": "Nostalgic and elegant retro style"
+    },
+    "modern": {
+      "title": "Modern Urban",
+      "description": "Contemporary urban fashion trends"
+    }
+  },
+  "community": {
+    "pageTitle": "Community",
+    "heroTitle": "Join FORTARC Fashion Community",
+    "heroSubtitle": "Share inspiration, explore styles, connect with like-minded people",
+    "joinButton": "Join Now",
+    "featuredPosts": "Featured Posts",
+    "latestPosts": "Latest Updates",
+    "trendingTopics": "Trending Topics",
+    "events": "Offline Events",
+    "upcomingEvents": "Upcoming Events",
+    "pastEvents": "Past Events",
+    "shareYourStyle": "Share Your Style",
+    "uploadPhoto": "Upload Photo",
+    "styleGallery": "Style Gallery",
+    "discussions": "Discussions",
+    "joinDiscussion": "Join Discussion",
+    "createPost": "Create Post",
+    "comments": "Comments",
+    "likes": "Likes",
+    "shares": "Shares",
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "searchCommunity": "Search Community",
+    "popularTags": "Popular Tags",
+    "followTag": "Follow Tag",
+    "members": "Members",
+    "activeMember": "Active Member",
+    "newMember": "New Member",
+    "memberSince": "Member Since",
+    "posts": "Posts",
+    "followers": "Followers",
+    "following": "Following",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
   "products": {
     "title": "Collection",
     "search": "Search Products",

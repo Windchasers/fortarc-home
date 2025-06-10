@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { authOptions } from '../auth/auth.config';
 import { ObjectId } from 'mongodb';
 import clientPromise from '@/lib/mongodb';
 import { Cart, CartItem } from '@/lib/models/cart';
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     const result = await db.collection('carts').updateOne(
       { userId: new ObjectId(user._id) },
       {
-        $push: { items: cartItem },
+        $push: { items: cartItem as any},
         $setOnInsert: {
           createdAt: new Date(),
         },
@@ -185,7 +185,7 @@ export async function DELETE(req: NextRequest) {
     const result = await db.collection('carts').updateOne(
       { userId: new ObjectId(user._id) },
       {
-        $pull: { items: { productId: new ObjectId(productId) } },
+        $pull: { items: { productId: new ObjectId(productId) } as any },
         $set: { updatedAt: new Date() }
       }
     );

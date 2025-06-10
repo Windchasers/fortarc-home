@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '@/lib/models/product';
 import MainLayout from '../../components/layout/MainLayout';
 import Image from 'next/image';
@@ -17,7 +17,6 @@ export default function ProductsPage() {
   
   // 获取翻译
   const t = useTranslations('products');
-  const commonT = useTranslations('common');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -103,14 +102,42 @@ export default function ProductsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {products.map((product) => (
               <Link href={`/products/${product._id}`} key={product._id} className="group">
-                <div className="aspect-w-1 aspect-h-1 mb-4 overflow-hidden bg-gray-100">
-                  <Image
-                    src={product.images[0]}
-                    alt={product.name}
-                    width={500}
-                    height={500}
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                  />
+                <div className="aspect-w-1 aspect-h-1 mb-4 overflow-hidden bg-gray-100 relative">
+                  {product.images && product.images.length > 0 ? (
+                    <>
+                      <Image
+                        src={product.images[0].startsWith('http') ? product.images[0] : product.images[0].startsWith('/') ? product.images[0] : `/${product.images[0]}`}
+                        alt={product.name}
+                        width={500}
+                        height={500}
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const placeholder = document.querySelector(`[data-product-id="${product._id}"] .placeholder`);
+                          if (placeholder) {
+                            placeholder.classList.remove('hidden');
+                          }
+                        }}
+                        onLoadingComplete={() => {
+                          const placeholder = document.querySelector(`[data-product-id="${product._id}"] .placeholder`);
+                          if (placeholder) {
+                            placeholder.classList.add('hidden');
+                          }
+                        }}
+                        priority={false}
+                        loading="lazy"
+                      />
+                      <div 
+                        className="absolute inset-0 bg-gray-200 animate-pulse placeholder hidden"
+                        data-product-id={product._id}
+                      />
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                      <span className="text-gray-400">{product.name}</span>
+                    </div>
+                  )}
                 </div>
                 <h3 className="text-lg font-medium">{product.name}</h3>
                 <p className="text-gray-700">{product.price.toLocaleString('zh-CN', { style: 'currency', currency: 'CNY' })}</p>

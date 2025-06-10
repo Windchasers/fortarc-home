@@ -273,6 +273,7 @@ const SettingsPage: FC = () => {
         </div>
       </div>
     </div>
+    </div>
   );
 };
 
